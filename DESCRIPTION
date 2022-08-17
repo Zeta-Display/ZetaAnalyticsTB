@@ -1,0 +1,14 @@
+Package: ZetaAnalyticsTB
+Title: Various Analytics tools for Zeta Display.
+Version: 0.0.0.9000
+Authors@R: 
+    person("Ilya", "Zarubin", , "ilya.a.zarub@googlemail.com", 
+           role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Useful functions for analysing point of sales (POS) Hemkøp data 
+summarized as a "toolbox".
+License: MIT + file LICENSE
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
