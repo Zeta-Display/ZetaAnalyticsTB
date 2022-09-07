@@ -182,6 +182,10 @@ get_merged_data_set <- function(data_sales1,
                                                  na.rm = TRUE)) %>%
         dplyr::mutate({{ tmp_name2 }} := .data[[tmp_name1]] / .data$antal_kvitton)
     }
+    data_final <- data_final %>%
+      dplyr::mutate(sales_zoner_count_TOTAL = rowSums(dplyr::across(dplyr::contains("sales_zoner_count_"),
+                                                      na.rm = TRUE))) %>%
+      dplyr::mutate(sales_zoner_frac_TOTAL = .data$sales_zoner_count_TOTAL / .data$antal_kvitton)
 
     names_skylttyp <- names(tmp_list[["skylttyp"]])
     num_skylttyp   <- length(names_skylttyp)
@@ -194,6 +198,10 @@ get_merged_data_set <- function(data_sales1,
                                                  na.rm = TRUE)) %>%
         dplyr::mutate({{ tmp_name2 }} := .data[[tmp_name1]] / .data$antal_kvitton)
     }
+    data_final <- data_final %>%
+      dplyr::mutate(sales_skylttyp_count_TOTAL = rowSums(dplyr::across(dplyr::contains("sales_skylttyp_count_"),
+                                                                      na.rm = TRUE))) %>%
+      dplyr::mutate(sales_skylttyp_frac_TOTAL = .data$sales_skylttyp_count_TOTAL / .data$antal_kvitton)
 
     names_kampanj <- names(tmp_list[["kampanj"]])
     num_kampanj   <- length(names_kampanj)
@@ -206,17 +214,48 @@ get_merged_data_set <- function(data_sales1,
                                                  na.rm = TRUE)) %>%
         dplyr::mutate({{ tmp_name2 }} := .data[[tmp_name1]] / .data$antal_kvitton)
     }
+    data_final <- data_final %>%
+      dplyr::mutate(sales_kampanj_count_TOTAL = rowSums(dplyr::across(dplyr::contains("sales_kampanj_count_"),
+                                                                      na.rm = TRUE))) %>%
+      dplyr::mutate(sales_kampanj_frac_TOTAL = .data$sales_kampanj_count_TOTAL / .data$antal_kvitton)
   }
   data_out <- data_final[, which(!(names(data_final) %in% col_names_removed))]
   if (time_frq == "daily") {
-    data_out <- data_out %>% dplyr::arrange(across(c("butik",
-                                                     "vecka",
-                                                     "datum"),
-                                                   desc))
+    data_out <- data_out %>% dplyr::arrange(dplyr::across(c("butik",
+                                                            "vecka",
+                                                            "datum"),
+                                                          dplyr::desc)) %>%
+      dplyr::ungroup()
+    data_out <- data_out %>% dplyr::select(c("butik",
+                                             "vecka",
+                                             "datum",
+                                             "antal_kvitton",
+                                             "sales_zoner_count_TOTAL",
+                                             "sales_zoner_frac_TOTAL"),
+                                           dplyr::contains("sales_zoner"),
+                                           c("sales_kampanj_count_TOTAL",
+                                             "sales_kampanj_frac_TOTAL"),
+                                           dplyr::contains("sales_kampanj"),
+                                           c("sales_skylttyp_count_TOTAL",
+                                             "sales_skylttyp_frac_TOTAL"),
+                                           dplyr::contains("sales_skylttyp"))
   } else if (time_frq == "weekly") {
-    data_out <- data_out %>% dplyr::arrange(across(c("butik",
-                                                     "vecka"),
-                                                   desc))
+    data_out <- data_out %>% dplyr::arrange(dplyr::across(c("butik",
+                                                            "vecka"),
+                                                          dplyr::desc)) %>%
+      dplyr::ungroup()
+    data_out <- data_out %>% dplyr::select(c("butik",
+                                             "vecka",
+                                             "antal_kvitton",
+                                             "sales_zoner_count_TOTAL",
+                                             "sales_zoner_frac_TOTAL"),
+                                           dplyr::contains("sales_zoner"),
+                                           c("sales_kampanj_count_TOTAL",
+                                             "sales_kampanj_frac_TOTAL"),
+                                           dplyr::contains("sales_kampanj"),
+                                           c("sales_skylttyp_count_TOTAL",
+                                             "sales_skylttyp_frac_TOTAL"),
+                                           dplyr::contains("sales_skylttyp"))
   }
   return(data_out)
 }
@@ -254,7 +293,6 @@ get_data_butik_reference_unit <- function(data_all,
   output <- vector("list", num_weeks)
   for (i in 1:num_weeks) {
     data_meta_tmp <- data_meta[[i]]
-    browser()
     name_zoner <- names(data_meta_tmp[[ref_unit]])
 
     if (time_frq == "daily") {

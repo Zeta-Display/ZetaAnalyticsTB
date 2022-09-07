@@ -1,0 +1,53 @@
+{
+  "butik":
+  {
+     "HEMKÖP UPPSALA VÄSTERTORG": ["uppsala"],
+     "HEMKÖP OSKARSTRÖM BLÅKLINTSVÄGEN": ["oskarström"],
+     "HEMKÖP MÖLNLYCKE C": ["mölnlycke"],
+     "HEMKÖP MALMÖ TRIANGELN": ["triangeln"],
+     "HEMKÖP FALUN C": ["falun"],
+     "HEMKÖP DALA-JÄRNA MYRBACKA": ["dala"]
+
+  },
+  "zoner":
+  {
+     "Inkastare/entré": ["inkastare"],
+     "F&G": ["F&G"],
+     "Bröd": ["Bröd"],
+     "Bake off": ["Bake"],
+     "Fisk - endast manuell disk": ["Fisk"],
+     "Deli - endast manuell": ["Deli"],
+     "Frys": ["Frys"],
+     "Mejeri": ["Mejeri"],
+     "Gavel 1": ["Gavel 1"],
+     "Gavel 2": ["Gavel 2"],
+     "Gavel 3": ["Gavel 3"]
+  },
+  "kampanj":
+  {
+    "Kampanj 1 - F&G 1": ["Kampanj F&G 1"],
+    "Kampanj 2 - F&G 2": ["Kampanj F&G 2"],
+    "Kampanj 1 - bröd, industribakat, hamburger/korv, tortillas osv": ["Kampanj Bröd 1"],
+    "Kampanj 2 -  om vi inte har två, kör vi Garant hamburgerbröd Brioche ord.pris/ABP?": ["Kampanj Bröd 2"],
+    "Kampanj 1 - frallor, bullar, baguette, bake off bröd - om ej kampanj multipris": ["Kampanj Bake off 1"],
+    "Kampanj 2 - om ej två kampanjer, multi ABP": ["Kampanj Bake off 2"],
+    "Kampanj 1 - bladet eller skagen": ["Kampanj Fisk 1"],
+    "Kampanj 1 - Triangeln, Mölnlycke, Dala-Järna": ["Kampanj Deli 1"],
+    "Kampanj 1 Frys": ["Kampanj Frys 1"],
+    "Kampanj 1 Mejeri": ["Kampanj Mejeri 1"],
+    "Kampanj 2 Mejeri": ["Kampanj Mejeri 2"],
+    "Kampanj 3 – Bomben": ["Kampanj Bomben 3"],
+    "ABP": ["Kampanj Gavel 2 ABP"],
+    "Kampanj 1 - dryck": ["Kampanj Gavel Dryck 1"],
+    "Kampanj 2 - Snacks, choklad, ABP om det finns": ["Kampanj Gavel ABP"]
+  },
+  "skylttyp":
+  {
+    "klubbvara": ["klubbvara"],
+    "kampanjvara": ["kampanjvara"],
+    "veckans klipp": ["veckans klipp"],
+    "alltid bra pris": ["alltid bra pris"],
+    "klubbpris": ["klubbpris"],
+    "ordinarie": ["ordinarie"]
+  }
+}
