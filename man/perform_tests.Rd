@@ -4,36 +4,31 @@
 \alias{perform_tests}
 \title{Performs various hypothesis tests on data.}
 \usage{
-perform_tests(data_set, ref_unit, cntr_period, test_period)
+perform_tests(data_set, type = NULL, cntrl, test)
 }
 \arguments{
 \item{data_set}{the data set for a specific butik/shop}
 
-\item{ref_unit}{a character specifying the reference unit of either
-\itemize{
-\item "zoner"
-\item "kampanj"
-\item "skylttyp"
-}
-for which the hypothesis test should be performed. Additionally, total
-sales i.e. the overall comparison for a shop/butik between testing and
-control phase is performed. The number of hypothesis tests equals therefor
-the number of different values for the reference unit + 1 (the overall
-test).}
+\item{type}{type of discriminating variable to fix test vs. control groups:
+either vecka (comparing groups) or butik (comparing stores) against each
+other}
 
-\item{cntr_period}{an integer sequence (from to e.g. \code{28:33}) specifying
-the weeks of the control period}
+\item{cntrl}{an integer sequence (from to e.g. \code{28:33}) specifying
+the weeks of the control group or a character sequence specifying the butik
+names of the control group}
 
-\item{test_period}{an integer sequence (from to e.g. \code{34:35}) specifying
-the weeks of the testing period}
+\item{test}{an integer sequence (from to e.g. \code{34:35}) specifying
+the weeks of the testing group or a character sequence specifying the butik
+names of the testing group}
 }
 \value{
-a list of hypothesis outputs of dimension \code{length(ref_unit) + 1}
-with each element containing the corresponding tests performed (Fisher, ..)
+a list of hypothesis-test outputs of dimension
+\code{length(ref_unit) + 1} with each element containing the corresponding
+tests performed (Fisher, ..)
 }
 \description{
 Hypothesis tests performed consider the different proportions of sales
-of advertised products between specified control period (\code{cntr_period})
-and testing period (\code{test_period}), the latter being characterized by
+of advertised products between specified control group (\code{cntrl})
+and testing group (\code{test}), the latter being characterized by
 the placement of screens to enhance consumer demand and increase sales.
 }

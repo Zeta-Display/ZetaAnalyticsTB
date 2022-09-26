@@ -4,23 +4,23 @@
 \alias{test_fisher}
 \title{Performs the exact Fisher test for the specific subset of data.}
 \usage{
-test_fisher(
-  data_sub_set,
-  var_to_test,
-  cntr_period,
-  test_period,
-  options = NULL
-)
+test_fisher(data_sub_set, var_to_test, type, cntrl, test, options = NULL)
 }
 \arguments{
 \item{data_sub_set}{a data set as passed via \code{data_set} from
-\code{\link[=perform_tests]{perform_tests()}} but additionally filtered for testing and control period}
+\code{\link[=perform_tests]{perform_tests()}} but additionally filtered for testing and controlgroup}
 
-\item{cntr_period}{an integer sequence (from to e.g. \code{28:33}) specifying
-the weeks of the control period}
+\item{type}{type of discriminating variable to fix test vs. control groups:
+either vecka (comparing groups) or butik (comparing stores) against each
+other}
 
-\item{test_period}{an integer sequence (from to e.g. \code{34:35}) specifying
-the weeks of the testing period}
+\item{cntrl}{an integer sequence (from to e.g. \code{28:33}) specifying
+the weeks of the control group or a character sequence specifying the butik
+names of the control group}
+
+\item{test}{an integer sequence (from to e.g. \code{34:35}) specifying
+the weeks of the testing group or a character sequence specifying the butik
+names of the testing group}
 }
 \value{
 test matrix for, and output matrix from \code{\link[=fisher.test]{fisher.test()}} for specific

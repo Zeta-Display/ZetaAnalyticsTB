@@ -4,10 +4,13 @@
 \alias{get_meta_data}
 \title{Generates list of zoner, kampanj and skylttyp for a all butiks and weeks.}
 \usage{
-get_meta_data(pth, data_validate)
+get_meta_data(pth, list_data_validate)
 }
 \arguments{
-\item{pth}{path to all data sets}
+\item{pth}{path to data set that stores the plan of campaigns}
+
+\item{list_data_validate}{a list of data sets to validate product IDs against
+plan of campaigns}
 }
 \value{
 a list of lists, with element of the latter being output from

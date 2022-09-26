@@ -2,7 +2,7 @@
 % Please edit documentation in R/00_helper_data_preparation.R
 \name{get_merged_data_set}
 \alias{get_merged_data_set}
-\title{Generates merged data sets on sales.}
+\title{Generates merged data set on sales.}
 \usage{
 get_merged_data_set(
   data_sales1,
@@ -26,7 +26,7 @@ of relevant products per zoner, kampanj and skylttyp or 'daily' for daily
 counts and frequencies}
 }
 \value{
-a list of all data sets computed as in the Description
+the data set computed as outlined in the description
 }
 \description{
 Uses first argument to get information on sales (count) of relevant products
