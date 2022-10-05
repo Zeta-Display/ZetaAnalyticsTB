@@ -21,7 +21,9 @@ get_list_test_week <- function(pth,
   check_avail   <- check_tmplist %in% names_validate
   if (!(all(check_avail))) {
     id_non_avail <- which(!check_avail)
-    cat(crayon::green("These zone-product-IDs are defined but not in data: \n"))
+    cat(crayon::green("These product-IDs (for zoner/kampanj/skylttyp) are ",
+                      "defined in kampanjplanering but not in data for \n"),
+        crayon::yellow("week ", sheet_name, " ...\n"))
     cat(crayon::red(paste0(check_tmplist[id_non_avail], "\n")))
     cat(crayon::bgMagenta("Removing these entries... \n"))
   }
@@ -91,9 +93,9 @@ get_list_test_week <- function(pth,
 #'   [get_list_test_week()].
 #' @export
 get_meta_data <- function(pth, list_data_validate) {
-  num_vecka <- length(list_data_validate)
-  names_sheets_vecka <- names(xlsx::getSheets(xlsx::loadWorkbook(pth)))
-  names_sheets_vecka <- names_sheets_vecka[1:num_vecka]
+  num_vecka   <- length(list_data_validate)
+  names_vecka <- names(xlsx::getSheets(xlsx::loadWorkbook(pth)))
+  names_vecka <-names_vecka[names_vecka %in% names(list_data_validate)]
 
   product_ids_avail_list <- vector("list", num_vecka)
   for (i in 1:num_vecka) {
@@ -101,10 +103,10 @@ get_meta_data <- function(pth, list_data_validate) {
   }
   out_list_test_weeks <- vector("list", num_vecka)
   for (i in seq_len(num_vecka)) {
-    out_list_test_weeks[[i]] <- get_list_test_week(pth, names_sheets_vecka[i],
+    out_list_test_weeks[[i]] <- get_list_test_week(pth, names_vecka[i],
                                                    product_ids_avail_list[[i]])
   }
-  names(out_list_test_weeks) <- names_sheets_vecka
+  names(out_list_test_weeks) <-names_vecka
   return(out_list_test_weeks)
 }
 #' Generates merged data set on sales.
