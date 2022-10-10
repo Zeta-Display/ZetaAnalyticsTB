@@ -4,7 +4,13 @@
 \alias{get_list_test_week}
 \title{Generates list of zoner, kampanj and skylttyp for a specific butik and week.}
 \usage{
-get_list_test_week(pth, sheet_name, names_validate)
+get_list_test_week(
+  pth,
+  sheet_name,
+  names_validate,
+  validate_data,
+  validate_kampanj
+)
 }
 \arguments{
 \item{pth}{path to test week as a string}
@@ -14,10 +20,19 @@ a string}
 
 \item{names_validate}{the names of product IDs for which campaigns and zones
 are defined, but which are not available in the raw data set}
+
+\item{validate_data}{logical; if \code{TRUE} checks if there are product IDs
+in \code{kampanjplanering} (data on planned advertising/campaigns) but not
+in the sales data (sales of advertised products)}
+
+\item{validate_kampanj}{logical; if \code{TRUE} checks if there are product
+IDs in the sales data (sales of advertised products) but not in
+\code{kampanjplanering} (data on planned advertising/campaigns)}
 }
 \value{
 a list of appropriate structure giving the product set for zoner,
-kampanj and skylttyp
+kampanj and skylttyp; optionally, the list's second element returns product
+IDs that are in the data but never appear in kampanjplanering
 }
 \description{
 The butiks can probably be treated equally but the weeks will have different

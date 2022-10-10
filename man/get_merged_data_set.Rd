@@ -31,7 +31,7 @@ the data set computed as outlined in the description
 \description{
 Uses first argument to get information on sales (count) of relevant products
 and second data set on counts of all products sold, and both to compute
-fractions (count/total) of relevant products. The third arguments identifies
-the different product sets of "relevant products" depending on zoner, kampanj
-or skylttyp.
+conversion rates (count/total) of relevant products. The third arguments
+identifies the different product sets of "relevant products" depending on
+zoner, kampanj or skylttyp.
 }

@@ -11,7 +11,11 @@ Description: Useful functions for analysing point of sales (POS) Hemkoep data.
 Imports:
     dplyr,
     magrittr,
-    rlang
+    rlang,
+    stringr,
+    readxl,
+    writexl,
+    crayon
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
