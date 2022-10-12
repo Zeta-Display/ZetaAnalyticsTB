@@ -223,7 +223,7 @@ get_meta_data <- function(pth, list_data_validate,
 #'    datum, and timme)
 #' @param data_sales2 data on sales of all products (per butik, vecka, datum,
 #'    and timme)
-#' @param list_test_weeks output from [get_()]
+#' @param list_test_weeks output from [get_meta_data()]
 #' @param time_frq character setting the time frequency of the data set
 #'   to be merged: either 'weekly' which generates weekly frequencies and counts
 #'   of relevant products per zoner, kampanj and skylttyp or 'daily' for daily

@@ -18,7 +18,7 @@ datum, and timme)}
 \item{data_sales2}{data on sales of all products (per butik, vecka, datum,
 and timme)}
 
-\item{list_test_weeks}{output from \code{\link[=get_]{get_()}}}
+\item{list_test_weeks}{output from \code{\link[=get_meta_data]{get_meta_data()}}}
 
 \item{time_frq}{character setting the time frequency of the data set
 to be merged: either 'weekly' which generates weekly frequencies and counts

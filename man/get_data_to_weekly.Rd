@@ -4,13 +4,10 @@
 \alias{get_data_to_weekly}
 \title{Read sales data on advertised products and split into test and control weeks}
 \usage{
-get_data_to_weekly(pth_to_dataset, butik_type, vecka_seq, cntrl_min, cntrl_max)
+get_data_to_weekly(pth_to_dataset, vecka_seq, cntrl_min, cntrl_max)
 }
 \arguments{
 \item{pth_to_dataset}{pth to the overall data set}
-
-\item{butik_type}{a character: either "sma" or "stora" for large and small
-butiks}
 
 \item{vecka_seq}{a vector of double digit integers specifying the test weeks}
 
