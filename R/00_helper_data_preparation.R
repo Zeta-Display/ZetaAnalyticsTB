@@ -7,8 +7,6 @@
 #'  is removed.
 #'
 #' @param pth_to_dataset pth to the overall data set
-#' @param butik_type a character: either "sma" or "stora" for large and small
-#'   butiks
 #' @param vecka_seq a vector of double digit integers specifying the test weeks
 #' @param cntrl_min 6 digit integer indicating the first control week (e.g.
 #'   202201)
@@ -18,7 +16,6 @@
 #' @return side effect function writing the data sets to the "data/..." location
 #' @export
 get_data_to_weekly <- function(pth_to_dataset,
-                               butik_type,
                                vecka_seq,
                                cntrl_min, cntrl_max) {
   num_vecka <- length(vecka_seq)
@@ -30,8 +27,7 @@ get_data_to_weekly <- function(pth_to_dataset,
     tmp_data <- data_all %>%
       dplyr::filter(.data$vecka %in% c(202200 + vecka_seq[i],
                                        cntrl_min:cntrl_max))
-    pth_to_write <- paste0("data/data_products_advertised_",
-                           butik_type,
+    pth_to_write <- paste0("data/data_products_advertised",
                            "_v",
                            vecka_seq[i], ".xlsx")
     cat(crayon::green("Writing data to: \n"),
