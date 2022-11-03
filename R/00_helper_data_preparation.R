@@ -185,7 +185,7 @@ get_meta_data <- function(pth, list_data_validate,
                           validate_kampanj) {
   num_vecka   <- length(list_data_validate)
   names_vecka <- names(xlsx::getSheets(xlsx::loadWorkbook(pth)))
-  names_vecka <-names_vecka[names_vecka %in% names(list_data_validate)]
+  names_vecka <- names_vecka[names_vecka %in% names(list_data_validate)]
 
   product_ids_avail_list <- vector("list", num_vecka)
   for (i in 1:num_vecka) {
@@ -442,4 +442,50 @@ get_data_butik_reference_unit <- function(data_all,
   }
   names(output) <- names_weeks
   return(output)
+}
+#' Merge data sets of advertised products
+#'
+#' Advertised products are those under digital signage. Merging occurs for
+#' different productID's. When duplicated productID's are identical, they are
+#' merged.
+#'
+#' @param pth_to_data path to data directory
+#' @param vecka_seq integer sequence of advertised productID's data sets, where
+#'    each such data set contains control weeks and current 'vecka' week.
+#'
+#' @return a merged data set containing all productsID's from all kampanj
+#' @export
+merge_advertised_vecka <- function(pth_to_data, vecka_seq) {
+  pth_to_datasets <- list.files(pth_to_data,
+                                pattern = "advertised",
+                                full.names = TRUE)
+  num_data <- length(pth_to_datasets)
+  data_out <- readxl::read_excel(pth_to_datasets[1])
+  for (i in 2:num_data) {
+    tmp_data <- readxl::read_excel(pth_to_datasets[2])
+    prodID_dupl <- setdiff(intersect(names(data_out), names(tmp_data)),
+                           c("butik", "vecka", "datum", "timme"))
+    num_prodID_dupl  <- length(prodID_dupl)
+
+    out_data_tmp <- dplyr::full_join(data_out, tmp_data)
+    prodID_equal <- NULL
+    for (j in 1:num_prodID_dupl) {
+      testcol1 <- paste0(prodID_dupl[[j]], ".x")
+      testcol2 <- paste0(prodID_dupl[[j]], ".y")
+      prodID_equal <- c(prodID_equal,
+                        isTRUE(all.equal(out_data_tmp[[testcol1]],
+                                         out_data_tmp[[testcol2]])))
+    }
+    if (!all(prodID_equal)) {
+      msg <- "Some Duplicated productIDs not equal when merging advertises data"
+      stop(msg)
+    } else {
+      id_drop <- which(names(tmp_data) %in% prodID_dupl)
+      tmp_data <- tmp_data[-c(id_drop)]
+      data_out <- dplyr::inner_join(data_out, tmp_data)
+    }
+    cat(crayon::green("Merging data set: \n"),
+        crayon::yellow(pth_to_datasets[i]), "\n")
+  }
+  return(data_out)
 }
