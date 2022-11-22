@@ -457,12 +457,12 @@ get_data_butik_reference_unit <- function(data_all,
 #' @export
 merge_advertised_vecka <- function(pth_to_data, vecka_seq) {
   pth_to_datasets <- list.files(pth_to_data,
-                                pattern = "advertised",
+                                pattern = "sales_data_products_advertised",
                                 full.names = TRUE)
   num_data <- length(pth_to_datasets)
   data_out <- readxl::read_excel(pth_to_datasets[1])
   for (i in 2:num_data) {
-    tmp_data <- readxl::read_excel(pth_to_datasets[2])
+    tmp_data <- readxl::read_excel(pth_to_datasets[i])
     prodID_dupl <- setdiff(intersect(names(data_out), names(tmp_data)),
                            c("butik", "vecka", "datum", "timme"))
     num_prodID_dupl  <- length(prodID_dupl)
@@ -482,7 +482,7 @@ merge_advertised_vecka <- function(pth_to_data, vecka_seq) {
     } else {
       id_drop <- which(names(tmp_data) %in% prodID_dupl)
       tmp_data <- tmp_data[-c(id_drop)]
-      data_out <- dplyr::inner_join(data_out, tmp_data)
+      data_out <- dplyr::full_join(data_out, tmp_data)
     }
     cat(crayon::green("Merging data set: \n"),
         crayon::yellow(pth_to_datasets[i]), "\n")
