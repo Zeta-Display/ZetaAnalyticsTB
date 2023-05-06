@@ -5,10 +5,12 @@
 \alias{ZetaAnalyticsTB}
 \title{ZetaAnalyticsTB:}
 \description{
-Some bla
+A package that comprises analytic tools developed in freelance projects for
+Zeta Display.
 }
-\section{foo functions}{
+\section{Introduction}{
 
-The foo functions ...
+If ever to be written, this sections outlines the package structure and gives
+an overview of the facilities.
 }
 

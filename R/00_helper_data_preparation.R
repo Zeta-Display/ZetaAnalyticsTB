@@ -15,9 +15,9 @@
 #'
 #' @return side effect function writing the data sets to the "data/..." location
 #' @export
-get_data_to_weekly <- function(pth_to_dataset,
-                               vecka_seq,
-                               cntrl_min, cntrl_max) {
+hs_get_data_to_weekly <- function(pth_to_dataset,
+                                  vecka_seq,
+                                  cntrl_min, cntrl_max) {
   num_vecka <- length(vecka_seq)
   data_all <- readxl::read_excel(pth_to_dataset)
   data_all$butik <- stringr::str_replace_all(string = data_all$butik,
@@ -46,8 +46,8 @@ get_data_to_weekly <- function(pth_to_dataset,
 #' @return a list of data sets witch each element representing data (for a week)
 #'   that is cleaned for relevant product IDs
 #' @export
-get_list_data_sales_prod_adv <- function(vecka_seq,
-                                         pth_data_prod_adv) {
+hs_get_list_data_sales_prod_adv <- function(vecka_seq,
+                                            pth_data_prod_adv) {
 
   num_vecka <- length(vecka_seq)
   num_prod_list <- vector("numeric", length = num_vecka)
@@ -76,17 +76,17 @@ get_list_data_sales_prod_adv <- function(vecka_seq,
 #'   a string
 #' @param names_validate the names of product IDs for which campaigns and zones
 #'   are defined, but which are not available in the raw data set
-#' @inheritParams get_meta_data
+#' @inheritParams hs_get_meta_data
 #'
 #' @return a list of appropriate structure giving the product set for zoner,
 #'   kampanj and skylttyp; optionally, the list's second element returns product
 #'   IDs that are in the data but never appear in kampanjplanering
 #' @export
-get_list_test_week <- function(pth,
-                               sheet_name,
-                               names_validate,
-                               validate_data,
-                               validate_kampanj) {
+hs_get_list_test_week <- function(pth,
+                                  sheet_name,
+                                  names_validate,
+                                  validate_data,
+                                  validate_kampanj) {
   data_tmp <- readxl::read_excel(pth, sheet = sheet_name)
   check_tmplist <- data_tmp$produktID
 
@@ -180,9 +180,9 @@ get_list_test_week <- function(pth,
 #' @return a list of lists, with element of the latter being output from
 #'   [get_list_test_week()].
 #' @export
-get_meta_data <- function(pth, list_data_validate,
-                          validate_data,
-                          validate_kampanj) {
+hs_get_meta_data <- function(pth, list_data_validate,
+                             validate_data,
+                             validate_kampanj) {
   num_vecka   <- length(list_data_validate)
   names_vecka <- names(xlsx::getSheets(xlsx::loadWorkbook(pth)))
   names_vecka <- names_vecka[names_vecka %in% names(list_data_validate)]
@@ -231,10 +231,10 @@ get_meta_data <- function(pth, list_data_validate,
 #'
 #' @return the data set computed as outlined in the description
 #' @export
-get_merged_data_set <- function(data_sales1,
-                                data_sales2,
-                                list_test_weeks,
-                                time_frq = "weekly") {
+hs_get_merged_data_set <- function(data_sales1,
+                                   data_sales2,
+                                   list_test_weeks,
+                                   time_frq = "weekly") {
 
   data_sets_list <- get_data_sets_list(data_sales1 = data_sales1,
                                        data_sales2 = data_sales2,
@@ -287,7 +287,7 @@ get_merged_data_set <- function(data_sales1,
   }
   return(data_out)
 }
-get_data_sets_list <- function(data_sales1, data_sales2, time_frq) {
+hs_get_data_sets_list <- function(data_sales1, data_sales2, time_frq) {
   data_sets     <- vector("list", 2)
   if (time_frq == "daily") {
     data_sets[[1]] <- data_sales1 %>%
@@ -327,7 +327,7 @@ get_data_sets_list <- function(data_sales1, data_sales2, time_frq) {
   data_final <- dplyr::inner_join(data_sets[[1]], data_sets[[2]])
   return(list(data_final = data_final, col_names_removed = col_names_removed))
 }
-add_zoner_vars <- function(data_set, tmp_list) {
+hs_add_zoner_vars <- function(data_set, tmp_list) {
   names_zoner <- names(tmp_list[["zoner"]])
   num_zoner   <- length(names_zoner)
   for(j in 1:num_zoner) {
@@ -345,7 +345,7 @@ add_zoner_vars <- function(data_set, tmp_list) {
     dplyr::mutate(zoner_convrate_TOTAL = .data$zoner_count_TOTAL / .data$antal_kvitton)
   data_set
 }
-add_skylttyp_vars <- function(data_set, tmp_list) {
+hs_add_skylttyp_vars <- function(data_set, tmp_list) {
   names_skylttyp <- names(tmp_list[["skylttyp"]])
   num_skylttyp   <- length(names_skylttyp)
   for(j in 1:num_skylttyp) {
@@ -363,8 +363,8 @@ add_skylttyp_vars <- function(data_set, tmp_list) {
     dplyr::mutate(skylttyp_convrate_TOTAL = .data$skylttyp_count_TOTAL / .data$antal_kvitton)
   data_set
 }
-add_kampanj_vars <- function(data_set,
-                             tmp_list) {
+hs_add_kampanj_vars <- function(data_set,
+                                tmp_list) {
   names_kampanj <- names(tmp_list[["kampanj"]])
   num_kampanj   <- length(names_kampanj)
   for(j in 1:num_kampanj) {
@@ -403,10 +403,10 @@ add_kampanj_vars <- function(data_set,
 #'   number of unique butiks which gives the overall data set as parts/slices
 #'   per week and butik
 #' @export
-get_data_butik_reference_unit <- function(data_all,
-                                          data_meta,
-                                          time_frq,
-                                          ref_unit) {
+hs_get_data_butik_reference_unit <- function(data_all,
+                                             data_meta,
+                                             time_frq,
+                                             ref_unit) {
   num_weeks   <- length(data_meta)
   names_weeks <- names(data_meta)
 
@@ -455,7 +455,7 @@ get_data_butik_reference_unit <- function(data_all,
 #'
 #' @return a merged data set containing all productsID's from all kampanj
 #' @export
-merge_advertised_vecka <- function(pth_to_data, vecka_seq) {
+hs_merge_advertised_vecka <- function(pth_to_data, vecka_seq) {
   pth_to_datasets <- list.files(pth_to_data,
                                 pattern = "sales_data_products_advertised",
                                 full.names = TRUE)

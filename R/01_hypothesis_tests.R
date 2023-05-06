@@ -28,12 +28,12 @@
 #'   a sub-sample of the data (see internals for details) that contains the
 #'   test-output (which varies depending on \code{type_test})
 #' @export
-perform_tests <- function(data_set,
-                          type_test,
-                          type_group_var = NULL,
-                          cntrl_group,
-                          test_group,
-                          options) {
+hs_perform_tests <- function(data_set,
+                             type_test,
+                             type_group_var = NULL,
+                             cntrl_group,
+                             test_group,
+                             options) {
   names_data_subsets <- setdiff(names(data_set),
                                 c("butik", "vecka", "datum","antal_kvitton"))
   num_subtests <- length(names_data_subsets)
@@ -54,19 +54,19 @@ perform_tests <- function(data_set,
 #' Performs the exact Fisher test for the specific subset of data.
 #'
 #' @param data_sub_set a data set as passed via \code{data_set} from
-#'    [perform_tests()] but additionally filtered for testing and controlgroup
-#' @inheritParams perform_tests
+#'    [hs_perform_tests()] but additionally filtered for testing and controlgroup
+#' @inheritParams hs_perform_tests
 #'
 #' @return data matrix for, and output matrix from different tests e.g.
 #'    [fisher.test()] for a single specific data (subset)
-perform_test <- function(data_sub_set,
-                         var_to_test,
-                         type_test,
-                         type_group_var,
-                         cntrl_group,
-                         test_group,
-                         options = list(conf_level = 0.95,
-                                        alternative = "two.sided")) {
+hs_perform_test <- function(data_sub_set,
+                            var_to_test,
+                            type_test,
+                            type_group_var,
+                            cntrl_group,
+                            test_group,
+                            options = list(conf_level = 0.95,
+                                           alternative = "two.sided")) {
   if (is.null(options)) {
     options <- list()
     options$conf_level  <- 0.95
@@ -82,10 +82,10 @@ perform_test <- function(data_sub_set,
                                alternative = options$alternative,
                                conf.level = options$conf_level)
   } else if (type_test == "proportional") {
-      test_output <- prop.test(x = t(test_matrix),
-                               n = NULL, # argument ignored as 'x' is a matrix
-                               alternative = options$alternative,
-                               conf.level = options$conf_level)
+    test_output <- prop.test(x = t(test_matrix),
+                             n = NULL, # argument ignored as 'x' is a matrix
+                             alternative = options$alternative,
+                             conf.level = options$conf_level)
   } else {
     stop("Unknown val. to arg. 'type_test'; see help for supported values.")
   }
@@ -97,14 +97,14 @@ perform_test <- function(data_sub_set,
 #'
 #' Supported tests are [prop.test()], [fisher.test()], ...
 #'
-#' @inheritParams perform_test
+#' @inheritParams hs_perform_test
 #'
 #' @return a matrix suitable as first argument to these tests (see Descripiton)
-get_test_matrix <- function(data_sub_set,
-                            var_to_test,
-                            type_group_var,
-                            cntrl_group,
-                            test_group) {
+hs_get_test_matrix <- function(data_sub_set,
+                               var_to_test,
+                               type_group_var,
+                               cntrl_group,
+                               test_group) {
   check_group_type <- any(type_group_var %in% c("vecka", "butik"))
   stopifnot(`unknown arg-value for 'type_group_var'` = check_group_type)
   if (type_group_var == "vecka") {
